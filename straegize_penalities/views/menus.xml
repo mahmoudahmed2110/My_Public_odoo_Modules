@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem
+                id="menu_human_resources_penality_employee"
+                name="Penalities"
+                parent="hr.menu_human_resources_configuration"
+                groups="base.group_no_one"
+                sequence="3"/>
+
+
+    </data>
+</odoo>

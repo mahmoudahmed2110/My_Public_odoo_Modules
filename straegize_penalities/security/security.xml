@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--category penaleties -->
+        <record id="module_category_custom_penaleties" model="ir.module.category">
+            <field name="name">Penaleties Management</field>
+            <field name="description">Category For Penaleties</field>
+            <field name="sequence">45</field>
+        </record>
+
+        <record id="group_penaleties_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_custom_penaleties"/>
+        </record>
+
+        <record id="group_penaleties_employee" model="res.groups">
+            <field name="name">Responsible Employee</field>
+            <field name="category_id" ref="module_category_custom_penaleties"/>
+            <field name="implied_ids" eval="[(4, ref('group_penaleties_user'))]"/>
+        </record>
+
+        <record id="group_penaleties_manager" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="module_category_custom_penaleties"/>
+            <field name="implied_ids" eval="[(4, ref('group_penaleties_employee'))]"/>
+        </record>
+
+
+    </data>
+</odoo>

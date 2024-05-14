@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+        <record id="inherit_view_hr_payslip_form" model="ir.ui.view">
+            <field name="name">inherit.hr.payslip</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='salary_computation']" position="after">
+                    <page string="Penalities" name="salary_computation">
+                        <field name="penalities_ids" colspan="4" nolabel="1" readonly="1">
+                            <tree string="Penality">
+                                <field name="name"/>
+                                <field name="penalty_date_apply" readonly="1" force_save="1"/>
+                                <field name="penalty_type" readonly="1" force_save="1"/>
+                                <field name="penalty_value" readonly="1" force_save="1"/>
+                            </tree>
+                            <form string="Penality Line">
+                                <group col="4">
+                                    <field name="name"/>
+                                    <field name="penalty_date_apply" readonly="1" force_save="1"/>
+                                    <field name="penalty_type" readonly="1" force_save="1"/>
+                                    <field name="penalty_value" readonly="1" force_save="1"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
