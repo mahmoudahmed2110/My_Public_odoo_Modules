@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!--Views-->
+    <!--form view of  purchase request-->
+
+    <record id="view_purchase_request_form" model="ir.ui.view">
+        <field name="name">purchase_request_form</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Request">
+                <header>
+                    <button name="button_confirm" type="object" states="draft" string="Confirm Order" class="oe_highlight" id="bid_confirm"/>
+                    <button name="button_cancel" states="confirm" string="Cancel" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm" readonly="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" attrs="{'readonly': [('state', 'in', ('confirm'))]}"/>
+                            <field name="account_analytic_id" attrs="{'readonly': [('state', 'in', ('confirm'))]}"/>
+                            <field name="create_date" attrs="{'readonly': [('state', 'in', ('confirm'))]}"/>
+                        </group>
+                        <group>
+                            <field name="create_uid" attrs="{'readonly': [('state', 'in', ('draft','confirm'))]}"/>
+                            <field name="requested_user" attrs="{'readonly': [('state', 'in', ('confirm'))]}"/>
+                            <field name="requested_on_date" attrs="{'readonly': [('state', 'in', ('confirm'))]}"/>
+                         </group>
+                     </group>
+                    <notebook>
+                        <page string="Purchase Order Lines">
+                            <field name="order_line" attrs="{'readonly': [('state', 'in', ('confirm'))]}">
+                                 <tree string="Purchase Order Lines" editable="bottom">
+<!--                                    <field name="partner_id"/>-->
+<!--                                    <field name="product_id"/>-->
+<!--                                     <field name="product_qty"/>-->
+<!--                                    <field name="product_uom"/>-->
+                                 </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Views-->
+    <!--tree view of  purchase request-->
+   <record id="view_purchase_request_tree" model="ir.ui.view">
+        <field name="name">purchase_request_tree</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="account_analytic_id"/>
+                <field name="create_date"/>
+                <field name="create_uid"/>
+                <field name="requested_user"/>
+                <field name="requested_on_date"/>
+            </tree>
+        </field>
+   </record>
+
+
+    <!-- Actions-->
+    <!-- Action for purchaserequest managements-->
+    <record id="actions_purchaserequest_views" model="ir.actions.act_window">
+        <field name="name">purchaserequest managment</field>
+        <field name="res_model">purchase.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                press to add new
+              </p>
+            <p>
+                this form contains purchaserequest info
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_purchase_requests_management" name="Purchase Requests"
+        parent="purchase.menu_purchase_root" sequence="2" />
+
+    <menuitem id="menu_purchase_requests_management_purchase_requests_name" name="Purchase Request"
+    parent="menu_purchase_requests_management"
+    action="actions_purchaserequest_views" sequence="1"/>
+
+
+</odoo>
