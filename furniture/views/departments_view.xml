@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- tree list view definition -->
+        <record model="ir.ui.view" id="furniture_departments_treeview">
+            <field name="name">Furniture Departments</field>
+            <field name="model">furniture.departments</field>
+            <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="size"/>
+                <field name="mobile"/>
+            </tree>
+            </field>
+        </record>
+
+        <!--  departments form view definition -->
+        <record model="ir.ui.view" id="furniture_departments_form">
+          <field name="name">Furniture Departments</field>
+          <field name="model">furniture.departments</field>
+          <field name="arch" type="xml">
+            <form string="Departments">
+                <header>
+                </header>
+                <sheet>
+                    <field name="image" widget="image"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="size"/>
+                            <field name="mobile" widget="phone"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+          </field>
+        </record>
+
+        <!-- actions opening departments views on models -->
+        <record model="ir.actions.act_window" id="furniture_departments_action_window">
+            <field name="name">Furniture Departments</field>
+            <field name="res_model">furniture.departments</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

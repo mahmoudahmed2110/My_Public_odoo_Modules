@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- furniture management tree list view definition -->
+        <record model="ir.ui.view" id="furniture_management_list">
+          <field name="name">Furniture Management list</field>
+          <field name="model">furniture.management</field>
+          <field name="arch" type="xml">
+            <tree>
+              <field name="name"/>
+              <field name="value"/>
+              <field name="active"/>
+              <field name="area"/>
+              <field name="price"/>
+              <field name="reference"/>
+              <field name="note"/>
+              <field name="descr"/>
+              <field name="colour"/>
+              <field name="finished_date"/>
+              <field name="worker"/>
+              <field name="department"/>
+            </tree>
+          </field>
+        </record>
+
+        <!--  furniture management form view definition -->
+        <record model="ir.ui.view" id="furniture_management_form">
+          <field name="name">Furniture Management</field>
+          <field name="model">furniture.management</field>
+          <field name="arch" type="xml">
+            <form string="Furniture">
+                <header>
+                </header>
+                <sheet>
+                    <field name="image" widget="image"/>
+                        <group col="4">
+                                <field name="name"/>
+                                <field name="value"/>
+                                <field name="active"/>
+                                <field name="price"/>
+                                <field name="currency_id"/>
+                                <field name="reference"/>
+                                <field name="area"/>
+                                <field name="note"/>
+                                <field name="descr"/>
+                                <field name="start_date"/>
+                                <field name="finished_date"/>
+                                <field name="worker" widget="many2many_tags"/>
+                                <field name="department"/>
+                                <field name="colour" widget="selection"/>
+                        </group>
+                </sheet>
+            </form>
+          </field>
+        </record>
+
+        <!-- Kanban view for furniture -->
+        <record id="furniture_kanban_view" model="ir.ui.view">
+            <field name="name">Furniture Kanban View</field>
+            <field name="model">furniture.management</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <field name="colour"/>
+                    <field name="value"/>
+                    <field name="active"/>
+                    <field name="price"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div  class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <field name="image" widget="image"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+                                    <div name="tags">
+                                        <strong>
+                                            <span><field name="colour"/></span>
+                                        </strong>
+                                    </div>
+                                    <div name="tags">
+                                        <ul>
+                                            <li><field name="active"/></li>
+                                        </ul>
+                                    </div>
+                                    <div name="tags">
+                                        <ul>
+                                            <li>Value:<field name="value"/></li>
+                                        </ul>
+                                    </div>
+                                    <div name="tags">
+                                        <ul>
+                                            <li>Price:<field name="price"/></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!--search view for the furniture management-->
+        <record id="furniture_management_search" model="ir.ui.view">
+            <field name="name">Furniture Management Search</field>
+            <field name="model">furniture.management</field>
+            <field name="arch" type="xml">
+                <search string="Search Furniture">
+                    <field name="name" filter_domain="['|',('name', 'ilike', self),('value', 'ilike', self),('active', 'ilike', self),('price', 'ilike', self),('note', 'ilike', self),('finished_date', 'ilike', self),('worker', 'ilike', self)]"/>
+                    <field name="value"/>
+                    <field name="active"/>
+                    <field name="price"/>
+                    <field name="note"/>
+                    <field name="finished_date"/>
+                    <field name="worker"/>
+                    <separator />
+                    <filter string="White" name="white" domain="[('colour', '=', 'white')]"/>
+                    <filter string="Black" name="black" domain="[('colour', '=', 'black')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="department" name="department" context="{'group_by':'department'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- actions opening furniture management views on models -->
+        <record model="ir.actions.act_window" id="furniture_action_window">
+          <field name="name">Furniture Management Window</field>
+          <field name="res_model">furniture.management</field>
+          <field name="view_mode">kanban,tree,form,search</field>
+        </record>
+
+    </data>
+</odoo>

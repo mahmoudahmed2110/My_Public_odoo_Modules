@@ -1,0 +1,53 @@
+<odoo>
+
+  <data>
+
+    <!--category furniture -->
+    <record id="module_category_furniture" model="ir.module.category">
+        <field name="name">Furniture Management</field>
+        <field name="description">Category For Furniture</field>
+        <field name="sequence">4</field>
+    </record>
+
+  <!-- Furniture User Group -->
+    <record id="group_furniture_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_furniture"/>
+    </record>
+
+  <!-- Furniture Manager Group -->
+    <record id="group_furniture_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_furniture"/>
+        <field name="implied_ids" eval="[(4, ref('group_furniture_user'))]"/>
+    </record>
+
+    <!--Record Rules-->
+    <!--Record Rules FOR USER-->
+    <record model="ir.rule" id="see_his_own_furniture">
+        <field name="name">See His furniture Only</field>
+        <field name="model_id" ref="model_furniture_management"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_furniture_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="0"/>
+    </record>
+
+    <!--Record Rules FOR MANAGER-->
+     <record model="ir.rule" id="see_all_furniture">
+        <field name="name">See All Furniture</field>
+        <field name="model_id" ref="model_furniture_management"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_furniture_manager'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+  </data>
+
+
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--creating menus-->
+    <!-- Top menu item -->
+    <menuitem id="furniture_main_menu" name="Furniture" sequence="1" web_icon="furniture,static/description/icon.png"/>
+
+    <!-- menu categories -->
+    <menuitem name="Furniture" id="furniture_management" parent="furniture_main_menu"/>
+    <menuitem name="Departments" id="furniture_departments" parent="furniture_main_menu"/>
+
+        <!-- submenu and action -->
+    <menuitem name="Furniture" id="furniture_furniture_list" parent="furniture_management"
+              action="furniture_action_window" sequence="0"/>
+
+    <!-- submenu and action -->
+   <menuitem name="Departments" id="furniture_department_list" parent="furniture_departments"
+              action="furniture_departments_action_window" sequence="1"/>
+
+</odoo>
