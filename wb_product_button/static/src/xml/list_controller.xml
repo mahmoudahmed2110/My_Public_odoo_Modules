@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<templates xml:space="preserve">
+    <t t-inherit="web.ListView.Buttons" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='nbSelected']" position="inside">
+            <button type="button" t-on-click="wbButtonClickEvent"
+                    t-if="model.root.resModel == 'product.template'" class="btn btn-primary" id="product_edit">
+                <span>Edit Product</span>
+            </button>
+        </xpath>
+    </t>
+</templates>
