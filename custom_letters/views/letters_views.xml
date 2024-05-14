@@ -1,0 +1,132 @@
+<odoo>
+  <data>
+
+        <record id="letters_requests_form" model="ir.ui.view">
+            <field name="name">letters.requests.form</field>
+            <field name="model">letters.requests</field>
+            <field name="arch" type="xml">
+                <form string="Letters Requests" class="o_purchase_order">
+                <header>
+                    <button name="button_submitted" states="to submit" string="Submit" type="object" class="oe_highlight" groups="custom_letters.group_letters_user" data-hotkey="g"/>
+                    <button name="button_approved" states="submitted" string="Approve" type="object" class="oe_highlight" groups="custom_letters.group_letters_employee" data-hotkey="g"/>
+                    <button name="button_to_refuse" states="submitted" string="Refuse" type="object" class="oe_highlight" groups="custom_letters.group_letters_manager" data-hotkey="g"/>
+                    <button name="button_cancel" states="submitted" string="Cancel" type="object" class="oe_highlight" groups="custom_letters.group_letters_manager" data-hotkey="g"/>
+                    <button name="button_return_to_submit" states="submitted, refused, cancel" string="Return_Submit" type="object" class="oe_highlight" groups="custom_letters.group_letters_manager" data-hotkey="g"/>
+                    <field name="state" widget="statusbar" statusbar_visible="to submit,submitted,approved,refused,cancel" readonly="1"/>
+                </header>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <span class="o_form_label" attrs="{'invisible': [('state','not in',('to submit','submitted'))]}">New Letter</span>
+                        <span class="o_form_label" attrs="{'invisible': [('state','in',('to submit', 'submitted'))]}">Letter Request</span>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="request_owner_id" widget="res_partner_many2one"/>
+                            <field name="category" widget="selection"/>
+                            <field name="date_confirmed"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="letters_requests_tree" model="ir.ui.view">
+            <field name="name">letters.requests.tree</field>
+            <field name="model">letters.requests</field>
+            <field name="arch" type="xml">
+                <tree string="Letter Request"
+                      decoration-muted="state=='cancel'" sample="1">
+                    <field name="name"/>
+                    <field name="request_owner_id"/>
+                    <field name="category"/>
+                    <field name="date_confirmed"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="letters_requests_view_tree" model="ir.ui.view">
+            <field name="name">letters.requests.view.tree</field>
+            <field name="model">letters.requests</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="state == 'cancel'"
+                    string="Letter Request"
+                    class="o_purchase_order"
+                    sample="1">
+                    <field name="name"/>
+                    <field name="request_owner_id"/>
+                    <field name="category"/>
+                    <field name="date_confirmed"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="letters_requests_kpis_tree" model="ir.ui.view">
+            <field name="name">letters.requests.inherit.letters.requests.tree</field>
+            <field name="model">letters.requests</field>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <tree string="New Letters Requests" decoration-info="state in ['to submit', 'submitted']"
+                decoration-muted="state == 'cancel'">
+                    <field name="name"/>
+                    <field name="request_owner_id"/>
+                    <field name="category"/>
+                    <field name="date_confirmed"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="letters_rfl" model="ir.actions.act_window">
+            <field name="name">New Letter</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">letters.requests</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="letters_requests_kpis_tree"/>
+            <field name="domain">[('state','in',('to submit', 'submitted'))]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No request for letters found. Let's create one!
+              </p><p>
+                Requests for letters are documents that will be sent to your suppliers to request letters, they will be confirmed and turned into My letters.
+              </p>
+            </field>
+        </record>
+        <menuitem action="letters_rfl" id="menu_letter_rfl"
+            parent="letters_requests"
+            sequence="0"/>
+
+        <record id="letters_form_action" model="ir.actions.act_window">
+            <field name="name">My Letters</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">letters.requests</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="letters_requests_view_tree"/>
+<!--            <field name="domain">[('state','in',('approved', 'refused', 'cancel'))]</field>-->
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No letters requests found. Let's create one!
+              </p><p>
+                Once you requested your letterss to your supplier, confirm your request for letters and it will turn into a My Letters.
+              </p>
+            </field>
+        </record>
+        <menuitem action="letters_form_action" id="menu_letters_form_action" parent="letters_requests" sequence="1"/>
+
+  </data>
+</odoo>

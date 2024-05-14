@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <!--creating menus-->
+        <!-- Top menu item -->
+        <menuitem id="letters_main_menu" name="Letters" sequence="1" web_icon="custom_letters,static/description/icon.png"/>
+
+        <!-- menu categories -->
+        <menuitem name="My Letters" id="letters_requests" parent="letters_main_menu"/>
+
+    </data>
+</odoo>
