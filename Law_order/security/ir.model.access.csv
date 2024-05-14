@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_lawyers_base_group,access.base.group.lawyers,model_lawyers,base.group_user,1,1,1,1
+access_customers_base_group,access.base.group.customers,model_customers,base.group_user,1,1,1,1

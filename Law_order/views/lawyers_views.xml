@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_lawyers_form" model="ir.ui.view">
+        <field name="name">lawyers</field>
+        <field name="model">lawyers</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="age"/>
+                        <field name="notes"/>
+                     </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+   <record id="view_lawyers_tree" model="ir.ui.view">
+        <field name="name">lawyers</field>
+        <field name="model">lawyers</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="age"/>
+                <field name="create_uid"/>
+                <field name="create_date"/>
+                <field name="write_uid"/>
+                <field name="write_date"/>
+            </tree>
+        </field>
+   </record>
+
+
+
+    <!-- Actions-->
+    <!-- Action for lawyers managements-->
+    <record id="actions_lawyers_views" model="ir.actions.act_window">
+        <field name="name">lawyer managements</field>
+        <field name="res_model">lawyers</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                press to add new
+              </p>
+            <p>
+                this form contains lawyers info
+            </p>
+        </field>
+
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="law_root_menu"
+              name="Law and Order"
+              sequence="0"/>
+    <menuitem id="lawyers_main_menu"
+              name="Lawyers" parent="law_root_menu" sequence="1"/>
+    <menuitem id="menu_lawyers_management" name="lawyer management" parent="lawyers_main_menu"
+              action="actions_lawyers_views" sequence="1"/>
+
+</odoo>
