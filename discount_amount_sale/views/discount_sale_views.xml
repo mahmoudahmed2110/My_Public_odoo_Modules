@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_discount_sale_view_order_form" model="ir.ui.view">
+            <field name="name">inherit.sale_view_order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <div class="o_td_label" groups="base.group_no_one">
+                        <label for="discount_amount_sale" string="Discount Amount"/>
+                    </div>
+                    <field name="discount_amount_sale" nolabel="1" groups="base.group_no_one" readonly="1"/>
+                    <div class="text-muted">
+                        Orderline Discount
+                    </div>
+                    <div class="text-muted">
+                        must be less than Discount amount value
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
