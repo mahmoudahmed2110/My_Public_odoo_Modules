@@ -1,0 +1,243 @@
+<odoo>
+    <data>
+
+        <template id="portal_my_home" inherit_id="portal.portal_my_home" name="My Portal">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="url">/new/product</t>
+                    <t t-set="title">Register Product</t>
+                </t>
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="url">/my/products</t>
+                    <t t-set="title">Products</t>
+                    <t t-set="placeholder_count" t-value="'product_counts'"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="portal_breadcrumbs" inherit_id="portal.portal_breadcrumbs">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name == 'products_list_view'" class="breadcrumb-item">Products</li>
+                <li t-if="page_name == 'register_product'" class="breadcrumb-item">Register Product</li>
+                <li t-if="page_name == 'products_form_view'" class="breadcrumb-item">
+                    <a href="/my/products">Products</a>
+                    /
+                    <span t-out="product.name"/>
+                </li>
+            </xpath>
+        </template>
+
+        <template id="new_products_form_view_portal">
+            <t t-call="portal.portal_layout">
+                <t t-call="portal.portal_table">
+                    <div class="alert alert-success" role="alert" t-if="success_msg">
+                        <t t-out="success_msg" />
+                    </div>
+                    <t t-foreach="error_list" t-as="error">
+                        <div class="alert alert-danger" role="alert">
+                            <t t-out="error" />
+                        </div>
+                    </t>
+                    <div class="alert alert-warning" id="product_client_side_validation_message" role="alert" style="display:none;">
+                        Hi this is warning message ...........
+                    </div>
+                    <div id="new_product_creation">
+                        <form method="post">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input type="char" name="name" id="name" class="form-control"
+                                           placeholder="Enter Product Name"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Product Category</label>
+                                <div class="col-sm-10">
+                                    <select name="category" id="category" class="form-control">
+                                        <option>Selection Category</option>
+                                        <t t-foreach="categories" t-as="category">
+                                            <option t-att-value="category.id">
+                                                <t t-out="category.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Create Product</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="my_products_list_view_portal">
+            <t t-call="portal.portal_layout">
+                <t t-set="breadcrumbs_searchbar" t-value="True"/>
+                <t t-call="portal.portal_searchbar">
+                    <t t-set="title">Products333</t>
+                </t>
+                <t t-call="portal.portal_table">
+                    <t t-foreach="group_products" t-as="products">
+                        <thead>
+                            <tr t-if="groupby in ('categ_id')">
+                                <th class="text-center" colspan="6">
+                                    <th class="text-center" t-if="groupby != 'categ_id'">
+                                        <h1>Product Category :
+                                            <em class="font-weight-normal text-muted"
+                                                t-out="products['categ_id'].name"/>
+                                            (<t t-out="len(products['products'])"/>)
+                                        </h1>
+                                    </th>
+                                </th>
+                            </tr>
+                            <tr class="active">
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Image</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Product type</th>
+                                <th class="text-center">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="products['products']" t-as="product">
+                                <tr>
+                                    <td class="text-center">
+                                        <t t-out="product.id"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-if="product.image_1920">
+                                            <img src="data:image/png;base64,{{product.image_1920}}" alt="avatar"
+                                                 class="rounded-circle img-fluid" style="width: 60px; height:60px;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                                 alt="avatar"
+                                                 class="rounded-circle img-fluid" style="width: 60px; height:60px;"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <a t-attf-href="/my/product/#{product.id}">
+                                            <t t-out="product.name"/>
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-out="product.detailed_type"/>
+                                    </td>
+                                    <td class="text-center" t-if="groupby != 'categ_id'">
+                                        <t t-out="product.categ_id.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <t t-out="product.list_price"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="my_products_form_view_portal" inherit_id="portal.portal_sidebar">
+            <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+                <t t-if="page_name == 'products_form_view'">
+                    <section style="background-color: #eee;">
+                        <div class="container py-5">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="card mb-4">
+                                        <div class="card-body text-center">
+                                            <t t-if="product.image_1920">
+                                                <img src="data:image/PNG;base64,{{product.image_1920}}" alt="avatar"
+                                                     class="rounded-circle img-fluid"
+                                                     style="width: 60px; height:60px;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                                     alt="avatar"
+                                                     class="rounded-circle img-fluid"
+                                                     style="width: 60px; height:60px;"/>
+                                            </t>
+                                            <a t-attf-href="/my/product/print/{{product.id}}" class="fa fa-download">
+                                                Download
+                                            </a>
+                                            <h5 class="my-3">
+                                                <t t-out="product.name"/>
+                                            </h5>
+                                            <p class="text-muted mb-1">
+                                                <t t-out="product.detailed_type"/>
+                                            </p>
+                                            <p class="text-muted mb-1">
+                                                <t t-out="product.categ_id.name"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Full Name</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">
+                                                        <t t-out="product.name"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Product Type</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">
+                                                        <t t-out="product.detailed_type"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Product Category</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">
+                                                        <t t-out="product.categ_id.name"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0">Product Price</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted mb-0">
+                                                        <t t-out="product.list_price"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container py-5">
+                            <h1>Chatter Feature</h1>
+                            <t t-call="portal.message_thread">
+                                <t t-set="object" t-value="product"/>
+                            </t>
+                        </div>
+                    </section>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>
