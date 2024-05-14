@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- form view for unversity faculty -->
+        <record id="unversity_application_faculty_form" model="ir.ui.view">
+            <field name="name">University Faculty"</field>
+            <field name="model">university.faculty</field>
+            <field name="arch" type="xml">
+                <form string="University Faculty" class="o_purchase_order">
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <group>
+                            <field name="name" placeholder="Enter Student Name"/>
+                        </group>
+                    </div>
+                    <group string="Facuty Info">
+                        <group>
+                            <field name="address" placeholder="City/Government/street-OR-City"/>
+                            <field name="mobile" widget="phone"/>
+                            <field name="mobile2" widget="phone"/>
+                        </group>
+                        <group>
+                            <field name="email" widget="email"/>
+                            <field name="location" placeholder="Enter GPS location point" widget="url"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="request_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree view for unversity faculty -->
+        <record id="university_faculty_tree" model="ir.ui.view">
+            <field name="name">University Faculty List</field>
+            <field name="model">university.faculty</field>
+            <field name="arch" type="xml">
+                <tree string="University Faculty">
+                    <field name="name"/>
+                    <field name="address"/>
+                    <field name="mobile"/>
+                    <field name="mobile2"/>
+                    <field name="email"/>
+                    <field name="location"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- actions opening university faculty management views on models -->
+        <record model="ir.actions.act_window" id="university_faculty_action_window">
+            <field name="name">University Faculty</field>
+            <field name="res_model">university.faculty</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create your First Faculty !
+              </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

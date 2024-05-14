@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--creating menus-->
+        <!-- Top menu item -->
+        <menuitem id="university_application_root"
+                  name="University Application"
+                  sequence="0"
+                  web_icon="university_application,static/description/icon.png"/>
+
+        <!-- menu categories -->
+        <menuitem id="university_application_request"
+                  name="University Application Request"
+                  sequence="0"
+                  parent="university_application_root"/>
+        <menuitem id="university_faculty"
+                  name="University  Faculty"
+                  sequence="1"
+                  parent="university_application_root"/>
+
+        <!-- submenu and action -->
+        <menuitem id="university_application_request_list"
+                  name="University Application Request"
+                  sequence="0"
+                  parent="university_application_request"
+                  action="university_application_request_action_window"/>
+
+        <menuitem id="university_students_relatives_list"
+                  name="University Students Relatives"
+                  sequence="1"
+                  parent="university_application_request"
+                  action="university_student_relatives_action_window"/>
+
+        <menuitem id="university_faculty_list"
+                  name="University Faculty"
+                  sequence="0"
+                  parent="university_faculty"
+                  groups="university_application.group_university_application_manager"
+                  action="university_faculty_action_window"/>
+
+    </data>
+</odoo>

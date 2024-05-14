@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- form view for unversity application request -->
+        <record id="unversity_application_request_form" model="ir.ui.view">
+            <field name="name">Application Request</field>
+            <field name="model">university.request</field>
+            <field name="arch" type="xml">
+                <form string="Application Requests" class="o_purchase_order">
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <group>
+                            <field name="name" placeholder="Enter Student Name"/>
+                        </group>
+                    </div>
+                    <group string="Personal Info">
+                        <group>
+                            <field name="student_address" placeholder="City/Government/street-OR-City"/>
+                            <field name="national_id"/>
+                            <field name="gender"/>
+                        </group>
+                        <group>
+                            <field name="age"/>
+                            <field name="birthdate"/>
+                        </group>
+                    </group>
+                    <group string="Contact Info">
+                        <group>
+                            <field name="mobile1" widget="phone"/>
+                            <field name="mobile2" widget="phone"/>
+                        </group>
+                        <group>
+                            <field name="email" widget="email"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="General Information" name="general_info">
+                            <group>
+                                <group>
+                                    <field name="student_length"/>
+                                    <field name="student_wieght"/>
+                                    <field name="results_total_degree"/>
+                                    <field name="results_total_percentage"/>
+                                </group>
+                                <group>
+                                    <field name="secondary_certificate" widget="image"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="studentrelatives_ids"/>
+                            </group>
+                        </page>
+                        <page string="Faculties and Student Skills" name="faculties_info" groups="university_application.group_university_application_manager">
+                            <group string="Faculties Info">
+                                <field name="faculty_ids"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="skills"/>
+                                </group>
+                                <group>
+                                    <field name="Talents"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree view for unversity application request -->
+        <record id="university_request_tree" model="ir.ui.view">
+            <field name="name">University Requests List</field>
+            <field name="model">university.request</field>
+            <field name="arch" type="xml">
+                <tree string="University Requests">
+                    <field name="name"/>
+                    <field name="student_address"/>
+                    <field name="national_id"/>
+                    <field name="birthdate"/>
+                    <field name="age"/>
+                    <field name="gender"/>
+                    <field name="mobile1"/>
+                    <field name="email"/>
+                    <field name="student_length"/>
+                    <field name="student_wieght"/>
+                    <field name="results_total_degree"/>
+                    <field name="results_total_percentage"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- actions opening application request management views on models -->
+        <record model="ir.actions.act_window" id="university_application_request_action_window">
+            <field name="name">University Application Request</field>
+            <field name="res_model">university.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create your First Request !
+              </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

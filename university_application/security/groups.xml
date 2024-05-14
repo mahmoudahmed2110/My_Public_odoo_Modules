@@ -1,0 +1,34 @@
+<odoo>
+
+
+    <data>
+
+    <!--category furniture -->
+    <record id="module_category_university_application" model="ir.module.category">
+        <field name="name">University Application Request</field>
+        <field name="description">Category For University</field>
+        <field name="sequence">5</field>
+    </record>
+
+    <!-- Furniture User Group -->
+    <record id="group_university_application_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_university_application"/>
+    </record>
+
+    <!-- Furniture Manager Group -->
+    <record id="group_university_application_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_university_application"/>
+        <field name="implied_ids" eval="[(4, ref('group_university_application_user'))]"/>
+    </record>
+
+    <!--Record Rules-->
+    <!--Record Rules FOR USER-->
+
+    <!--Record Rules FOR MANAGER-->
+
+    </data>
+
+
+</odoo>

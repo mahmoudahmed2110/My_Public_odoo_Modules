@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- form view for unversity Students Relatives -->
+        <record id="unversity_studentrelatives_form" model="ir.ui.view">
+            <field name="name">University Students Relatives"</field>
+            <field name="model">university.studentrelatives</field>
+            <field name="arch" type="xml">
+                <form string="University Students Relatives" class="o_purchase_order">
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <group>
+                            <field name="name" placeholder="Enter StudentRelative Name"/>
+                        </group>
+                    </div>
+                    <group string="StudentRelative Info">
+                        <group>
+                            <field name="age"/>
+                            <field name="mobile" widget="phone"/>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="university_request_id" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree view for unversity Students Relatives -->
+        <record id="university_studentrelatives_tree" model="ir.ui.view">
+            <field name="name">Students Relatives List</field>
+            <field name="model">university.studentrelatives</field>
+            <field name="arch" type="xml">
+                <tree string="Students Relatives">
+                    <field name="name"/>
+                    <field name="age"/>
+                    <field name="mobile"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- actions opening university studentrelatives management views on models -->
+        <record model="ir.actions.act_window" id="university_student_relatives_action_window">
+            <field name="name">University Students Relatives</field>
+            <field name="res_model">university.studentrelatives</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create your First student relative !
+              </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
